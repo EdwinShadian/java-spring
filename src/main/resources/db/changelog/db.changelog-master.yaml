@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog.yaml
+  - changeSet:
+      id: 1
+      author: Shadian
+      changes:
+        - createTable:
+            tableName: logs
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: message
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: level
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: context
+                  type: text
+      rollback:
+        - dropTable:
+            taleName: logs

@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  java-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: java-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:12-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: service
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  adminer:
+    image: adminer
+    container_name: adminer-pg
+    ports:
+      - "8000:8080"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
