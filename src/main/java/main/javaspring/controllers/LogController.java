@@ -53,7 +53,8 @@ public class LogController {
 
     @DeleteMapping("/logs/{id}")
     @JsonFormat
-    public void destroy(@PathVariable Long id) {
+    public void destroy(@PathVariable Long id) throws ModelNotFoundException {
+        this.logRepository.findById(id).orElseThrow(() -> new ModelNotFoundException("Log not found! ID: ", id));
         this.logRepository.deleteById(id);
     }
 }
